@@ -40,40 +40,66 @@ print_map()
 # Game loop
 while True:
     # Check if a key is pressed (non-blocking)
+    message = ""
     if msvcrt.kbhit():
         move = msvcrt.getch().decode('utf-8')  # Get the pressed key
         
         if move == 'w':
-            if player_row > 1 and gameMap[player_row - 1][player_col] != '#':
+            if gameMap[player_row - 1][player_col] == "?" :
                 gameMap[player_row][player_col] = '/'
                 player_row -= 1
                 gameMap[player_row][player_col] = '@'
+                message = "You picked up a small key."
+            elif player_row > 1 and gameMap[player_row - 1][player_col] != '#':
+                gameMap[player_row][player_col] = '/'
+                player_row -= 1
+                gameMap[player_row][player_col] = '@'
+                message = "You move one unit north."
             else:
-                print("Cannot move up. There's a wall.") # need to fix gets cleared
+                message = "Cannot move up. There's a wall." # need to fix gets cleared
         elif move == 's':
-            if player_row < height - 2 and gameMap[player_row + 1][player_col] != '#':
+            if gameMap[player_row + 1][player_col] == "?" :
                 gameMap[player_row][player_col] = '/'
                 player_row += 1
                 gameMap[player_row][player_col] = '@'
+                message = "You picked up a small key."
+            elif player_row < height - 2 and gameMap[player_row + 1][player_col] != '#':
+                gameMap[player_row][player_col] = '/'
+                player_row += 1
+                gameMap[player_row][player_col] = '@'
+                message = "You move one unit south."
             else:
-                print("Cannot move down. There's a wall.") # need to fix gets cleared
+                message = "Cannot move down. There's a wall." # need to fix gets cleared
         elif move == 'a':
-            if player_col > 1 and gameMap[player_row][player_col - 1] != '#':
+            if gameMap[player_row][player_col - 1] == "?" :
                 gameMap[player_row][player_col] = '/'
                 player_col -= 1
                 gameMap[player_row][player_col] = '@'
+                message = "You picked up a small key."
+            elif player_col > 1 and gameMap[player_row][player_col - 1] != '#':
+                gameMap[player_row][player_col] = '/'
+                player_col -= 1
+                gameMap[player_row][player_col] = '@'
+                message = "You move one unit west."
             else:
-                print("Cannot move left. There's a wall.") # need to fix gets cleared
+                message = "Cannot move left. There's a wall." # need to fix gets cleared
         elif move == 'd':
-            if player_col < width - 2 and gameMap[player_row][player_col + 1] != '#':
+            if gameMap[player_row][player_col + 1] == "?" :
                 gameMap[player_row][player_col] = '/'
                 player_col += 1
                 gameMap[player_row][player_col] = '@'
+                message = "You picked up a small key."
+            elif player_col < width - 2 and gameMap[player_row][player_col + 1] != '#':
+                gameMap[player_row][player_col] = '/'
+                player_col += 1
+                gameMap[player_row][player_col] = '@'
+                message = "You move one unit east."
             else:
-                print("Cannot move right. There's a wall.") # need to fix gets cleared
+                message = "Cannot move right. There's a wall." # need to fix gets cleared
         elif move == 'q':
             NaityveUtils.clear_console()
             break
 
         # update map
         print_map()
+        print(message)
